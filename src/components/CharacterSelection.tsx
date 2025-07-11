@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Crown, Music, Heart, Sparkles, Scroll, Shield, Star, Flame, Eye, Users, ExternalLink, BookOpen, X, Globe } from 'lucide-react';
+import TempleActivityCard from './TempleActivityCard';
 
 const StatBar = ({ label, value, icon }: { label: string; value: number; icon: React.ReactNode }) => (
   <div className="mb-3">
@@ -1026,26 +1027,17 @@ export default function CharacterSelection() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {getAvailableActivities(selectedCharacter).map((activity) => (
-                  <button 
+                  <TempleActivityCard
                     key={activity.id}
+                    icon={activity.icon}
+                    title={isHebrew ? activity.nameHe : activity.name}
+                    subtitle={isHebrew ? activity.descriptionHe : activity.description}
+                    info=""
+                    color={activity.color}
+                    isHebrew={isHebrew}
                     onClick={() => handleActivitySelect(activity.id)}
-                    className={`bg-gradient-to-br ${activity.color} hover:scale-105 rounded-xl p-4 border ${activity.borderColor} transition-all duration-300 hover:shadow-lg cursor-pointer ${
-                      currentActivity === activity.id ? 'animate-pulse ring-2 ring-amber-400' : ''
-                    }`}
-                  >
-                    <div className="text-center">
-                      <div className="flex justify-center mb-3 text-amber-700">
-                        {activity.icon}
-                      </div>
-                      <h4 className="font-bold text-amber-900 mb-2">{isHebrew ? activity.nameHe : activity.name}</h4>
-                      <p className="text-amber-800 text-sm">{isHebrew ? activity.descriptionHe : activity.description}</p>
-                      {currentActivity === activity.id && (
-                        <div className="mt-2 text-xs text-amber-600 font-medium">
-                          {isHebrew ? translations.performingSacredDuty.he : translations.performingSacredDuty.en}
-                        </div>
-                      )}
-                    </div>
-                  </button>
+                    isActive={currentActivity === activity.id}
+                  />
                 ))}
               </div>
             </div>
