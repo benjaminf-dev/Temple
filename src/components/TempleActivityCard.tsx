@@ -22,28 +22,25 @@ function TempleActivityCard({
 
   return (
     <div
-      className={`rounded-xl shadow-md p-4 cursor-pointer text-center transition hover:shadow-lg hover:scale-105 flex flex-col ${color}`}
+      className={`rounded-xl shadow-md p-4 cursor-pointer text-center transition-all duration-300 hover:shadow-lg hover:scale-105 ${color}`}
       dir={isHebrew ? "rtl" : "ltr"}
       onClick={() => setOpen(!open)}
     >
+      {/* Icon */}
       <div className="text-3xl mb-2">{icon}</div>
+      
+      {/* Title */}
       <h3 className={`text-xl font-bold mb-1 ${isHebrew ? "font-hebrew" : ""}`}>
         {title}
       </h3>
-      <p
-        className={`text-sm text-gray-600 mb-2 ${
-          isHebrew ? "font-hebrew" : ""
-        }`}
-      >
+      
+      {/* Subtitle */}
+      <p className={`text-sm text-gray-600 mb-2 ${isHebrew ? "font-hebrew" : ""}`}>
         {subtitle}
       </p>
 
       {/* Toggle Indicator */}
-      <div
-        className={`inline-flex items-center gap-1 text-xs text-gray-500 mb-2 ${
-          isHebrew ? "flex-row-reverse font-hebrew" : ""
-        }`}
-      >
+      <div className={`inline-flex items-center gap-1 text-xs text-gray-500 mb-2 ${isHebrew ? "flex-row-reverse font-hebrew" : ""}`}>
         {open ? (
           <>
             {isHebrew ? "הסתר פרטים" : "Hide Details"}
@@ -57,19 +54,15 @@ function TempleActivityCard({
         )}
       </div>
 
-      {/* Expanded Info Section */}
+      {/* Expanded Content - Inside the same card */}
       <div
-        className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out ${
-          open ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
+        className={`overflow-hidden transition-all duration-300 ${
+          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div
-          className={`bg-white bg-opacity-60 backdrop-blur-sm rounded-lg p-3 text-sm shadow-inner mt-2 ${
-            isHebrew
-              ? "text-right font-hebrew leading-relaxed"
-              : "text-left leading-relaxed"
-          }`}
-        >
+        <div className={`bg-white bg-opacity-60 p-3 rounded-lg text-sm ${
+          isHebrew ? "text-right font-hebrew" : "text-left"
+        }`}>
           {info}
         </div>
       </div>
