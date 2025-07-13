@@ -1,10 +1,10 @@
 import React from 'react';
-import CharacterSelection from './components/CharacterSelection';
+import ModernCharacterSelection from './components/ModernCharacterSelection';
 
 function App() {
   return (
     <div className="min-h-screen">
-      <CharacterSelection />
+      <ModernCharacterSelection />
     </div>
   );
 }
