@@ -54,13 +54,13 @@ function TempleActivityCard({
         )}
       </div>
 
-      {/* Expanded Content - Inside the same card */}
+      {/* Expanded Content */}
       <div
-        className={`overflow-hidden transition-all duration-300 ${
+        className={`transition-all duration-300 overflow-hidden ${
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className={`bg-white bg-opacity-60 p-3 rounded-lg text-sm ${
+        <div className={`bg-white bg-opacity-60 p-3 rounded-lg text-sm mt-2 ${
           isHebrew ? "text-right font-hebrew" : "text-left"
         }`}>
           {info}
