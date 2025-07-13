@@ -5,60 +5,60 @@ import TempleActivityCard from './TempleActivityCard';
 function CharacterSelection() {
   const [isHebrew, setIsHebrew] = useState(false);
 
-  const activities = [
+  const roles = [
     {
-      icon: "🎵",
-      title: isHebrew ? "שיר של יום" : "Shir Shel Yom",
-      subtitle: isHebrew ? "שיר יומי של הלויים" : "Daily Song of the Levites",
+      icon: "👑",
+      title: isHebrew ? "כהן גדול" : "High Priest",
+      subtitle: isHebrew ? "מנהיג רוחני של העם" : "Spiritual Leader of the People",
       info: isHebrew ? 
-        "הלויים שרו שיר מיוחד כל יום בבית המקדש. כל יום היה לו תהילים משלו שהתאים לאופי היום ולמשמעותו הרוחנית." :
-        "The Levites sang a special song each day in the Temple. Each day had its own psalm that matched the character and spiritual significance of that day.",
-      color: "bg-blue-100"
-    },
-    {
-      icon: "🔥",
-      title: isHebrew ? "הקטרת קטורת" : "Incense Offering",
-      subtitle: isHebrew ? "הקטרת הסמים הקדושים" : "Burning of Sacred Spices",
-      info: isHebrew ? 
-        "הקטורת הייתה תערובת של 11 סמים קדושים שהוקטרה פעמיים ביום - בבוקר ובערב. הריח הנעים עלה לשמים כסמל לתפילות העם." :
-        "The incense was a mixture of 11 sacred spices burned twice daily - morning and evening. The pleasant aroma rose to heaven as a symbol of the people's prayers.",
+        "הכהן הגדול היה הדמות הרוחנית הגבוהה ביותר בעם ישראל. הוא לבש בגדי קודש מיוחדים עם החושן והאפוד, ורק הוא יכול היה להיכנס לקודש הקדשים ביום הכיפורים. תפקידו כלל הנהגת כל עבודת בית המקדש, הוראה לעם, ופסיקה בשאלות הלכתיות חשובות." :
+        "The High Priest was the highest spiritual figure among the people of Israel. He wore special sacred garments with the breastplate and ephod, and only he could enter the Holy of Holies on Yom Kippur. His role included leading all Temple service, teaching the people, and making decisions on important religious matters.",
       color: "bg-purple-100"
     },
     {
-      icon: "💧",
-      title: isHebrew ? "טהרה ריטואלית" : "Ritual Purity",
-      subtitle: isHebrew ? "הכנה רוחנית לעבודה" : "Spiritual Preparation for Service",
+      icon: "🔥",
+      title: isHebrew ? "כהן" : "Priest",
+      subtitle: isHebrew ? "משרת בקודש" : "Sacred Servant",
       info: isHebrew ? 
-        "הכהנים והלויים היו צריכים לעבור טקסי טהרה מיוחדים לפני כל עבודה בבית המקדש. זה כלל רחיצה במקווה ולבישת בגדי קודש." :
-        "The priests and Levites had to undergo special purification rituals before any Temple service. This included immersion in a mikveh and wearing sacred garments.",
-      color: "bg-cyan-100"
+        "הכהנים היו צאצאי אהרן הכהן ושירתו בבית המקדש. הם הקריבו קרבנות, הדליקו את המנורה, הקטירו קטורת, וברכו את העם בברכת כהנים. הכהנים לבשו בגדי לבן מיוחדים ועברו טקסי טהרה לפני כל עבודה. הם גם לימדו תורה לעם ופסקו בדיני טהרה וטומאה." :
+        "The priests were descendants of Aaron the priest and served in the Temple. They offered sacrifices, lit the menorah, burned incense, and blessed the people with the priestly blessing. The priests wore special white garments and underwent purification rituals before each service. They also taught Torah to the people and ruled on matters of purity and impurity.",
+      color: "bg-orange-100"
     },
     {
-      icon: "🌾",
-      title: isHebrew ? "מנחת התמיד" : "Daily Meal Offering",
-      subtitle: isHebrew ? "קרבן הקמח והשמן" : "Flour and Oil Sacrifice",
+      icon: "🎵",
+      title: isHebrew ? "לוי" : "Levite",
+      subtitle: isHebrew ? "נגן ושומר בית המקדש" : "Temple Musician and Guardian",
       info: isHebrew ? 
-        "מנחת התמיד הייתה קרבן יומי של קמח דק מעורב בשמן זית וליבונה. היא הוקרבה יחד עם קרבן העולה כסמל לתודה ולהכרת הטוב." :
-        "The daily meal offering was a daily sacrifice of fine flour mixed with olive oil and frankincense. It was offered together with the burnt offering as a symbol of gratitude and thanksgiving.",
-      color: "bg-amber-100"
+        "הלויים היו בני שבט לוי ששירתו בבית המקדש בתפקידים שונים. חלקם היו נגנים ומשוררים שביצעו את השיר היומי ואת המוזיקה בחגים. אחרים שמרו על שערי בית המקדש, נקו את החצרות, ועזרו לכהנים בהכנת הקרבנות. הלויים גם לימדו תורה בערי הלויים ברחבי הארץ." :
+        "The Levites were members of the tribe of Levi who served in the Temple in various roles. Some were musicians and singers who performed the daily song and music during festivals. Others guarded the Temple gates, cleaned the courtyards, and helped the priests prepare sacrifices. The Levites also taught Torah in the Levitical cities throughout the land.",
+      color: "bg-blue-100"
     },
     {
-      icon: "☀️",
-      title: isHebrew ? "הדלקת המנורה" : "Lighting the Menorah",
-      subtitle: isHebrew ? "הדלקת נרות הזהב" : "Lighting the Golden Lamps",
+      icon: "🛡️",
+      title: isHebrew ? "שומר" : "Temple Guard",
+      subtitle: isHebrew ? "מגן על קדושת המקום" : "Protector of Sacred Space",
       info: isHebrew ? 
-        "המנורה הזהב הייתה מוארת תמיד בבית המקדש. הכהנים היו מדליקים ומכבים את הנרות בזמנים קבועים, ומוודאים שהאור לא יכבה לעולם." :
-        "The golden menorah was always lit in the Temple. The priests would light and extinguish the lamps at set times, ensuring that the light would never go out completely.",
-      color: "bg-yellow-100"
+        "שומרי בית המקדש היו אחראים על אבטחת המקום הקדוש ושמירה על כללי הכניסה. הם עמדו בשערים, בדקו שרק אנשים טהורים נכנסים לחצרות, ודאגו לסדר במהלך החגים כשהמוני עולי רגל הגיעו לירושלים. השומרים גם היו אחראים על שמירת כלי הקודש ואוצרות בית המקדש." :
+        "The Temple guards were responsible for securing the holy place and maintaining entrance regulations. They stood at the gates, checked that only pure people entered the courtyards, and maintained order during festivals when masses of pilgrims came to Jerusalem. The guards were also responsible for protecting the sacred vessels and Temple treasures.",
+      color: "bg-green-100"
     },
     {
-      icon: "👑",
-      title: isHebrew ? "ברכת כהנים" : "Priestly Blessing",
-      subtitle: isHebrew ? "ברכה לעם ישראל" : "Blessing for the People of Israel",
+      icon: "📜",
+      title: isHebrew ? "סופר" : "Scribe",
+      subtitle: isHebrew ? "כותב ומעתיק כתבי קודש" : "Writer and Copier of Sacred Texts",
       info: isHebrew ? 
-        "הכהנים היו מברכים את העם בברכה המיוחדת: 'יברכך ה' וישמרך, יאר ה' פניו אליך ויחנך, ישא ה' פניו אליך וישם לך שלום'." :
-        "The priests would bless the people with the special blessing: 'May the Lord bless you and keep you, may the Lord make His face shine upon you and be gracious to you, may the Lord lift up His face to you and give you peace'.",
+        "הסופרים היו חכמים שהתמחו בכתיבה ובהעתקה של כתבי הקודש. הם כתבו ספרי תורה, תפילין, מזוזות, וכתבו מסמכים רשמיים של בית המקדש. הסופרים גם שמרו על מסורת הכתיב הנכונה, ספרו אותיות ומילים בספרי התורה, ולימדו קריאה וכתיבה. תפקידם היה חיוני לשמירה על דיוק הטקסטים הקדושים." :
+        "The scribes were scholars who specialized in writing and copying sacred texts. They wrote Torah scrolls, tefillin, mezuzot, and wrote official Temple documents. The scribes also preserved the tradition of correct writing, counted letters and words in Torah scrolls, and taught reading and writing. Their role was vital for maintaining the accuracy of sacred texts.",
       color: "bg-indigo-100"
+    },
+    {
+      icon: "🏛️",
+      title: isHebrew ? "מנהל בית המקדש" : "Temple Administrator",
+      subtitle: isHebrew ? "מארגן את פעילות המקדש" : "Organizer of Temple Activities",
+      info: isHebrew ? 
+        "מנהלי בית המקדש היו אחראים על התפעול היומיומי של המקדש. הם תיאמו בין הכהנים והלויים, דאגו לאספקת חומרי הקרבנות, ניהלו את אוצר בית המקדש, וארגנו את לוחות הזמנים של העבודות השונות. המנהלים גם דאגו לתחזוקת המבנה, לניקיון, ולכל הצרכים הלוגיסטיים הנדרשים לתפקוד תקין של בית המקדש." :
+        "Temple administrators were responsible for the daily operation of the Temple. They coordinated between priests and Levites, ensured the supply of sacrifice materials, managed the Temple treasury, and organized schedules for various services. The administrators also took care of building maintenance, cleanliness, and all logistical needs required for proper Temple functioning.",
+      color: "bg-yellow-100"
     }
   ];
 
@@ -98,16 +98,16 @@ function CharacterSelection() {
           </p>
         </div>
 
-        {/* Activity Cards Grid */}
+        {/* Role Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {activities.map((activity, index) => (
+          {roles.map((role, index) => (
             <TempleActivityCard
               key={index}
-              icon={activity.icon}
-              title={activity.title}
-              subtitle={activity.subtitle}
-              info={activity.info}
-              color={activity.color}
+              icon={role.icon}
+              title={role.title}
+              subtitle={role.subtitle}
+              info={role.info}
+              color={role.color}
               isHebrew={isHebrew}
             />
           ))}
