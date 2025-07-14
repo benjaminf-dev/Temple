@@ -167,8 +167,13 @@ function Temple3D() {
     setToastMessage("You earned the 'Ketoret Apprentice' badge!");
     setShowToast(true);
     
-    // Close modal and return to main activity menu
+    // Reset to main screen - clear current step to return to activity menu
     setCurrentStep(1);
+    
+    // Reset ingredients for next time
+    setIngredients(prev => prev.map(ing => ({ ...ing, placed: false, correct: false })));
+    setGrindingProgress(0);
+    setSelectedSmokeHerb('');
     
     // Update purity level
     setPurityLevel(prev => Math.min(prev + 10, 100));
