@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Info, ExternalLink, Award, Flame, Sparkles, CheckCircle } from 'lucide-react';
+import Toast from './Toast';
+import BadgePanel from './BadgePanel';
 
 interface Avatar {
   id: string;
@@ -12,6 +14,15 @@ interface Avatar {
   experienceLevel: number;
   zoneAccess: number;
   image: string;
+}
+
+interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  earned: boolean;
+  earnedDate?: string;
 }
 
 interface Ingredient {
@@ -41,8 +52,33 @@ function Temple3D() {
   ]);
   const [grindingProgress, setGrindingProgress] = useState(0);
   const [selectedSmokeHerb, setSelectedSmokeHerb] = useState('');
-  const [badges, setBadges] = useState<string[]>([]);
+  const [badges, setBadges] = useState<Badge[]>([
+    {
+      id: 'ketoret-apprentice',
+      name: 'Ketoret Apprentice',
+      description: 'Successfully prepared sacred incense following ancient Temple traditions',
+      icon: '🔥',
+      earned: false
+    },
+    {
+      id: 'menorah-master',
+      name: 'Menorah Master',
+      description: 'Properly maintained the golden menorah with seven branches',
+      icon: '🕯️',
+      earned: false
+    },
+    {
+      id: 'temple-scholar',
+      name: 'Temple Scholar',
+      description: 'Demonstrated deep knowledge of Temple rituals and practices',
+      icon: '📜',
+      earned: false
+    }
+  ]);
   const [showTempleInstituteModal, setShowTempleInstituteModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [showBadgePanel, setShowBadgePanel] = useState(false);
   const [purityLevel, setPurityLevel] = useState(85);
   const [isHebrew, setIsHebrew] = useState(false);
 
@@ -120,9 +156,49 @@ function Temple3D() {
   };
 
   const completeIncenseRitual = () => {
-    setBadges(prev => [...prev, 'Ketoret Apprentice']);
+    // Update badge as earned
+    setBadges(prev => prev.map(badge => 
+      badge.id === 'ketoret-apprentice' 
+        ? { ...badge, earned: true, earnedDate: new Date().toLocaleDateString() }
+        : badge
+    ));
+    
+    // Show toast notification
+    setToastMessage("You earned the 'Ketoret Apprentice' badge!");
+    setShowToast(true);
+    
+    // Close modal and return to main activity menu
+    setCurrentStep(1);
+    
+    // Update purity level
     setPurityLevel(prev => Math.min(prev + 10, 100));
   };
+
+  const handleViewBadge = () => {
+    setShowToast(false);
+    setShowBadgePanel(true);
+  };
+
+  const handleCloseToast = () => {
+    setShowToast(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      if (showBadgePanel) {
+        setShowBadgePanel(false);
+      } else if (showTempleInstituteModal) {
+        setShowTempleInstituteModal(false);
+      } else if (showAvatarModal) {
+        // Don't allow closing avatar modal with ESC on first load
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown as any);
+    return () => document.removeEventListener('keydown', handleKeyDown as any);
+  }, [showBadgePanel, showTempleInstituteModal, showAvatarModal]);
 
   const allIngredientsPlaced = ingredients.every(ing => ing.placed);
 
@@ -130,7 +206,10 @@ function Temple3D() {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
       {/* Avatar Selection Modal */}
       {showAvatarModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={(e) => e.target === e.currentTarget && setShowAvatarModal(false)}
+        >
           <div className="bg-white rounded-xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">
@@ -218,7 +297,10 @@ function Temple3D() {
 
       {/* Temple Institute Modal */}
       {showTempleInstituteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={(e) => e.target === e.currentTarget && setShowTempleInstituteModal(false)}
+        >
           <div className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4">
             <div className="text-center">
               <h3 className="text-2xl font-bold mb-4">Temple Institute</h3>
@@ -274,7 +356,7 @@ function Temple3D() {
                 </div>
                 <div className="text-center">
                   <div className="text-xs opacity-75">{isHebrew ? 'תגים' : 'Badges'}</div>
-                  <div className="text-lg font-bold">{badges.length}</div>
+                  <div className="text-lg font-bold">{badges.filter(b => b.earned).length}</div>
                 </div>
                 <button
                   onClick={() => setShowTempleInstituteModal(true)}
@@ -513,18 +595,24 @@ function Temple3D() {
             )}
 
             {/* Badges Display */}
-            {badges.length > 0 && (
+            {badges.filter(b => b.earned).length > 0 && (
               <div className="fixed bottom-4 left-4 bg-white rounded-lg shadow-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Award className="text-yellow-500" size={20} />
                   <span className="font-semibold">{isHebrew ? 'תגים' : 'Badges'}</span>
                 </div>
-                {badges.map((badge, index) => (
-                  <div key={index} className="bg-yellow-50 p-2 rounded text-sm">
-                    🏆 {badge}
+                {badges.filter(b => b.earned).map((badge) => (
+                  <div key={badge.id} className="bg-yellow-50 p-2 rounded text-sm mb-2">
+                    {badge.icon} {badge.name}
                   </div>
                 ))}
-                {badges.includes('Ketoret Apprentice') && (
+                <button
+                  onClick={() => setShowBadgePanel(true)}
+                  className="text-xs text-blue-600 hover:underline mt-2"
+                >
+                  {isHebrew ? 'הצג את כל התגים' : 'View All Badges'}
+                </button>
+                {badges.find(b => b.id === 'ketoret-apprentice' && b.earned) && (
                   <div className="bg-blue-50 p-2 rounded text-xs mt-2">
                     {isHebrew 
                       ? 'עובדה מעניינת: קטורת מוקרבת בוקר וערב; כהן גדול מוסיף נוספת ביום הכיפורים'
@@ -535,6 +623,25 @@ function Temple3D() {
               </div>
             )}
           </div>
+
+          {/* Toast Notification */}
+          {showToast && (
+            <Toast
+              message={toastMessage}
+              badge="Ketoret Apprentice"
+              onClose={handleCloseToast}
+              onViewBadge={handleViewBadge}
+              autoCloseDelay={5000}
+            />
+          )}
+
+          {/* Badge Panel */}
+          <BadgePanel
+            isOpen={showBadgePanel}
+            onClose={() => setShowBadgePanel(false)}
+            badges={badges}
+            isHebrew={isHebrew}
+          />
         </div>
       )}
     </div>
