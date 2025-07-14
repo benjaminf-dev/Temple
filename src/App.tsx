@@ -1,10 +1,10 @@
 import React from 'react';
-import CharacterSelection from './components/CharacterSelection';
+import Temple3D from './components/Temple3D';
 
 function App() {
   return (
     <div className="min-h-screen">
-      <CharacterSelection />
+      <Temple3D />
     </div>
   );
 }
